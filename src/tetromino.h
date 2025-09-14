@@ -23,7 +23,6 @@ public:
     void setX(int newX) { x = newX; }
     void setY(int newY) { y = newY; }
 
-    // теперь только объявления (реализация в .cpp)
     void moveLeft();
     void moveRight();
     void moveDown();

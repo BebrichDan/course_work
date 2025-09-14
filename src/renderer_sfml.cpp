@@ -14,11 +14,9 @@ void RendererSFML::render(sf::RenderWindow& window, const Tetromino& piece, cons
     const int boardWidthPx = board.getWidth() * tileSize;
     const int boardHeightPx = board.getHeight() * tileSize;
 
-    // Центрируем игровое поле
     const int offsetX = 50;
     const int offsetY = 50;
 
-    // 🔹 Рисуем фон поля
     sf::RectangleShape background(sf::Vector2f(boardWidthPx, boardHeightPx));
     background.setPosition(offsetX, offsetY);
     background.setFillColor(sf::Color(30, 30, 30));
@@ -26,7 +24,6 @@ void RendererSFML::render(sf::RenderWindow& window, const Tetromino& piece, cons
     background.setOutlineColor(sf::Color::White);
     window.draw(background);
 
-    // 🔹 Рисуем клетки из grid
     const auto& grid = board.getGrid();
     for (int y = 0; y < board.getHeight(); y++) {
         for (int x = 0; x < board.getWidth(); x++) {
@@ -39,7 +36,6 @@ void RendererSFML::render(sf::RenderWindow& window, const Tetromino& piece, cons
         }
     }
 
-    // 🔹 Рисуем текущую фигуру
     auto shape = piece.getShape();
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
@@ -52,7 +48,6 @@ void RendererSFML::render(sf::RenderWindow& window, const Tetromino& piece, cons
         }
     }
 
-    // 🔹 Выводим текст: очки и уровень
     sf::Text stats;
     stats.setFont(font);
     stats.setCharacterSize(20);
@@ -63,7 +58,6 @@ void RendererSFML::render(sf::RenderWindow& window, const Tetromino& piece, cons
     stats.setPosition(offsetX + boardWidthPx + 20, offsetY);
     window.draw(stats);
 
-    // 🔹 Подсказки
     sf::Text controls;
     controls.setFont(font);
     controls.setCharacterSize(18);
@@ -78,6 +72,29 @@ void RendererSFML::render(sf::RenderWindow& window, const Tetromino& piece, cons
                        "Space - Drop");
     controls.setPosition(offsetX + boardWidthPx + 20, offsetY + 100);
     window.draw(controls);
+
+    window.display();
+}
+
+void RendererSFML::renderGameOver(sf::RenderWindow& window, const Progress& progress, const ScoreManager& scoreManager) {
+    window.clear(sf::Color::Black);
+
+    sf::Text gameOverText;
+    gameOverText.setFont(font);
+    gameOverText.setCharacterSize(50);
+    gameOverText.setFillColor(sf::Color::Red);
+    gameOverText.setString("GAME OVER!");
+    gameOverText.setPosition(150, 150);
+    window.draw(gameOverText);
+
+    sf::Text scoreText;
+    scoreText.setFont(font);
+    scoreText.setCharacterSize(30);
+    scoreText.setFillColor(sf::Color::White);
+    scoreText.setString("Score: " + std::to_string(progress.getScore()) +
+                        "\nHigh Score: " + std::to_string(scoreManager.getHighScore()));
+    scoreText.setPosition(170, 250);
+    window.draw(scoreText);
 
     window.display();
 }

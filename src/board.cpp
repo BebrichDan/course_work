@@ -65,3 +65,7 @@ int Board::clearLines() {
 void Board::reset() {
     grid.assign(height, std::vector<int>(width, 0));
 }
+
+void Board::clearGrid() {
+    reset(); 
+}

@@ -16,3 +16,4 @@ $(EXEC): $(OBJ)
 
 clean:
 	rm -f $(OBJ) $(EXEC)
+	rm highscore.txt

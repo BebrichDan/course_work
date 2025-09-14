@@ -1,7 +1,8 @@
 #include "scoreManager.h"
 #include <fstream>
 
-ScoreManager::ScoreManager(const std::string& file) : score(0), highScore(0), filename(file) {
+ScoreManager::ScoreManager(const std::string& file) 
+    : score(0), highScore(0), filename(file) {
     loadHighScore();
 }
 
@@ -39,5 +40,12 @@ void ScoreManager::loadHighScore() {
         file.close();
     } else {
         highScore = 0;
+    }
+}
+
+void ScoreManager::updateHighScore() {
+    if (score > highScore) {
+        highScore = score;
+        saveHighScore();
     }
 }

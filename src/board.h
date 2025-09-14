@@ -18,8 +18,8 @@ public:
     void placePiece(const Tetromino& piece);
     int clearLines();
     void reset();
+    void clearGrid(); 
 
-    // Inline-геттеры (НЕ ДЕЛАЕМ ИХ В .cpp!)
     int getWidth() const { return width; }
     int getHeight() const { return height; }
     const std::vector<std::vector<int>>& getGrid() const { return grid; }

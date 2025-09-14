@@ -5,6 +5,7 @@
 #include "player.h"
 #include "progress.h"
 #include "gameController.h"
+#include "scoreManager.h"
 #include <chrono>
 
 int main() {
@@ -13,6 +14,7 @@ int main() {
     Player player("Player");
     Progress progress;
     GameController controller(board, factory, progress);
+    ScoreManager scoreManager("highscore.txt");
 
     sf::RenderWindow window(sf::VideoMode(800, 700), "Tetris");
     window.setFramerateLimit(60);
@@ -36,6 +38,9 @@ int main() {
                     window.close();
                 }
                 if (event.key.code == sf::Keyboard::S) {
+                    // рестарт игры
+                    progress.resetScore();
+                    board.clearGrid();
                     isRunning = true;
                     isPaused = false;
                 }
@@ -43,16 +48,16 @@ int main() {
                     isPaused = !isPaused;
                 }
 
-                if (isRunning && !isPaused) {
-                    if (event.key.code == sf::Keyboard::A) controller.moveLeft();
-                    if (event.key.code == sf::Keyboard::D) controller.moveRight();
-                    if (event.key.code == sf::Keyboard::W) controller.rotate();
-                    if (event.key.code == sf::Keyboard::Space) controller.drop();
+                if (isRunning && !isPaused && !progress.isGameOver()) {
+                    if (event.key.code == sf::Keyboard::Left) controller.moveLeft();
+                    if (event.key.code == sf::Keyboard::Right) controller.moveRight();
+                    if (event.key.code == sf::Keyboard::Space) controller.rotate();
+                    if (event.key.code == sf::Keyboard::Down) controller.drop();
                 }
             }
         }
 
-        if (isRunning && !isPaused) {
+        if (isRunning && !isPaused && !progress.isGameOver()) {
             auto now = std::chrono::steady_clock::now();
             std::chrono::duration<float> elapsed = now - lastFallTime;
 
@@ -62,8 +67,13 @@ int main() {
             }
         }
 
-        renderer.render(window, controller.getCurrentPiece(), player, progress);
+        if (progress.isGameOver()) {
+            renderer.renderGameOver(window, progress, scoreManager);
+        } else {
+            renderer.render(window, controller.getCurrentPiece(), player, progress);
+        }
     }
+    scoreManager.saveHighScore();
 
     return 0;
 }
