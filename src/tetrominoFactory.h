@@ -1,12 +1,13 @@
 #ifndef TETROMINO_FACTORY_H
 #define TETROMINO_FACTORY_H
 
-#include "tetromino.h"
 #include <random>
 
+#include "tetromino.h"
+
 class TetrominoFactory {
-public:
-    Tetromino createRandomTetromino();
+ public:
+  Tetromino createRandomTetromino();
 };
 
 #endif

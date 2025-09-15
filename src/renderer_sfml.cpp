@@ -14,7 +14,7 @@ void RendererSFML::render(sf::RenderWindow& window,
                           const ScoreManager& scoreManager) {
     window.clear(sf::Color::Black);
 
-    // если игра окончена 
+    // игра окончена 
     if (progress.isGameOver()) {
         sf::Text gameOverText("GAME OVER", font, 40);
         gameOverText.setFillColor(sf::Color::Red);
@@ -26,7 +26,13 @@ void RendererSFML::render(sf::RenderWindow& window,
         scoreText.setPosition(200, 260);
         window.draw(scoreText);
 
-        sf::Text highScoreText("High Score: " + std::to_string(scoreManager.getHighScore()), font, 30);
+        // рекорд с именем рекордсмена
+        std::string hsPlayer = scoreManager.getHighScorePlayer();
+        if (hsPlayer.empty()) hsPlayer = "Unknown";
+        sf::Text highScoreText(
+            "High Score: " + std::to_string(scoreManager.getHighScore()) +
+            " - " + hsPlayer,
+            font, 30);
         highScoreText.setFillColor(sf::Color::Yellow);
         highScoreText.setPosition(200, 320);
         window.draw(highScoreText);
@@ -92,12 +98,11 @@ void RendererSFML::render(sf::RenderWindow& window,
     stats.setPosition(offsetX + board.getWidth() * tileSize + 20, offsetY);
     window.draw(stats);
 
-    // рекорд
+    // рекорд (только число во время игры, имя показываем только на Game Over)
     sf::Text highScoreText("High Score: " + std::to_string(scoreManager.getHighScore()), font, 20);
     highScoreText.setFillColor(sf::Color::Yellow);
     highScoreText.setPosition(offsetX + board.getWidth() * tileSize + 20, offsetY + 100);
     window.draw(highScoreText);
-
 
     sf::Text controls;
     controls.setFont(font);

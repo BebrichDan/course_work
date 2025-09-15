@@ -24,12 +24,12 @@ std::string getPlayerName(sf::RenderWindow& window, sf::Font& font) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
-                return "Player"; // если закроет окно
+                return "Player";
             }
             if (event.type == sf::Event::TextEntered) {
-                if (event.text.unicode == '\b') { // backspace
+                if (event.text.unicode == '\b') {
                     if (!name.empty()) name.pop_back();
-                } else if (event.text.unicode == '\r') { // enter
+                } else if (event.text.unicode == '\r') {
                     if (!name.empty()) return name;
                 } else if (event.text.unicode < 128 && event.text.unicode >= 32) {
                     name += static_cast<char>(event.text.unicode);
@@ -37,16 +37,42 @@ std::string getPlayerName(sf::RenderWindow& window, sf::Font& font) {
             }
         }
 
-        // экран ввода
         window.clear(sf::Color::Black);
-
-        inputText.setString(name + "|"); // курсор
+        inputText.setString(name + "|");
         window.draw(hint);
         window.draw(inputText);
-
         window.display();
     }
     return "Player";
+}
+
+void showStartScreen(sf::RenderWindow& window, sf::Font& font) {
+    sf::Text title("TETRIS", font, 64);
+    title.setFillColor(sf::Color::Cyan);
+    title.setStyle(sf::Text::Bold);
+    title.setPosition(200, 200);
+
+    sf::Text prompt("Press S to start", font, 32);
+    prompt.setFillColor(sf::Color::White);
+    prompt.setPosition(220, 350);
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+                return;
+            }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::S) {
+                return;
+            }
+        }
+
+        window.clear(sf::Color::Black);
+        window.draw(title);
+        window.draw(prompt);
+        window.display();
+    }
 }
 
 int main() {
@@ -62,11 +88,13 @@ int main() {
     std::string playerName = getPlayerName(window, font);
     Player player(playerName);
 
+    showStartScreen(window, font);
+
     Board board(10, 20);
     TetrominoFactory factory;
     Progress progress;
     GameController controller(board, factory, progress);
-    ScoreManager scoreManager("highscore.txt"); // при старте
+    ScoreManager scoreManager("highscore.txt");
     RendererSFML renderer(board);
 
     bool isRunning = false;
@@ -79,24 +107,28 @@ int main() {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                scoreManager.saveHighScore(); // при выходе
+                scoreManager.saveHighScore();
                 window.close();
             }
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Q) {
-                    scoreManager.saveHighScore(); // при выходе
+                    scoreManager.saveHighScore();
                     window.close();
                 }
                 if (event.key.code == sf::Keyboard::S) {
+                    // старт или рестарт
                     isRunning = true;
                     isPaused = false;
                     progress.resetScore();
                     progress.setGameOver(false);
                     board.clearGrid();
                     scoreManager.resetScore();
+                    lastFallTime = std::chrono::steady_clock::now();
                 }
                 if (event.key.code == sf::Keyboard::P) {
-                    isPaused = !isPaused;
+                    if (isRunning && !progress.isGameOver()) {
+                        isPaused = !isPaused;
+                    }
                 }
 
                 if (isRunning && !isPaused && !progress.isGameOver()) {
@@ -119,11 +151,10 @@ int main() {
         }
 
         if (progress.isGameOver()) {
-            scoreManager.updateHighScore(progress.getScore());
+            scoreManager.updateHighScore(progress.getScore(), player.getName());
         }
 
         renderer.render(window, controller.getCurrentPiece(), player, progress, scoreManager);
-
     }
 
     return 0;

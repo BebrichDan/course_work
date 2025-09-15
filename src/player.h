@@ -4,15 +4,14 @@
 #include <string>
 
 class Player {
-private:
-    std::string name;
+ private:
+  std::string name;
 
-public:
-    Player(const std::string& name = "Player");
+ public:
+  Player(const std::string& name = "Player");
 
-    void setName(const std::string& newName);
-    std::string getName() const;
-
+  void setName(const std::string& newName);
+  std::string getName() const;
 };
 
 #endif

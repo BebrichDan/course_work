@@ -22,3 +22,11 @@ rebuild: clean all
 
 play: 	
 	./tetris
+
+style_formating:
+	find . -name "*.cc" -exec clang-format -i -style=Google {} +
+	find . -name "*.h" -exec clang-format -i -style=Google {} +
+
+style_check:
+	find . -name "*.cc" -exec clang-format -n -style=Google {} +
+	find . -name "*.h" -exec clang-format -n -style=Google {} +

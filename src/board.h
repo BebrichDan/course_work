@@ -6,23 +6,23 @@
 class Tetromino;
 
 class Board {
-private:
-    int width;
-    int height;
-    std::vector<std::vector<int>> grid;
+ private:
+  int width;
+  int height;
+  std::vector<std::vector<int>> grid;
 
-public:
-    Board(int w = 10, int h = 22);
+ public:
+  Board(int w = 10, int h = 22);
 
-    bool checkCollision(const Tetromino& piece, int dx, int dy) const;
-    void placePiece(const Tetromino& piece);
-    int clearLines();
-    void reset();
-    void clearGrid(); 
+  bool checkCollision(const Tetromino& piece, int dx, int dy) const;
+  void placePiece(const Tetromino& piece);
+  int clearLines();
+  void reset();
+  void clearGrid();
 
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
-    const std::vector<std::vector<int>>& getGrid() const { return grid; }
+  int getWidth() const { return width; }
+  int getHeight() const { return height; }
+  const std::vector<std::vector<int>>& getGrid() const { return grid; }
 };
 
 #endif

@@ -2,29 +2,29 @@
 #define GAMECONTROLLER_H
 
 #include "board.h"
+#include "progress.h"
 #include "tetromino.h"
 #include "tetrominoFactory.h"
-#include "progress.h"
 
 class GameController {
-private:
-    Board& board;
-    TetrominoFactory& factory;
-    Progress& progress;
-    Tetromino currentPiece;
+ private:
+  Board& board;
+  TetrominoFactory& factory;
+  Progress& progress;
+  Tetromino currentPiece;
 
-    void spawnNewPiece();
+  void spawnNewPiece();
 
-public:
-    GameController(Board& b, TetrominoFactory& f, Progress& p);
+ public:
+  GameController(Board& b, TetrominoFactory& f, Progress& p);
 
-    void update();
-    void moveLeft();
-    void moveRight();
-    void rotate();
-    void drop();
+  void update();
+  void moveLeft();
+  void moveRight();
+  void rotate();
+  void drop();
 
-    const Tetromino& getCurrentPiece() const { return currentPiece; }
+  const Tetromino& getCurrentPiece() const { return currentPiece; }
 };
 
 #endif
