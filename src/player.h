@@ -6,7 +6,6 @@
 class Player {
 private:
     std::string name;
-    int level;
 
 public:
     Player(const std::string& name = "Player");
@@ -14,10 +13,6 @@ public:
     void setName(const std::string& newName);
     std::string getName() const;
 
-    void setLevel(int newLevel);
-    int getLevel() const;
-
-    void levelUp();
 };
 
 #endif

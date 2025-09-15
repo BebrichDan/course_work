@@ -16,4 +16,9 @@ $(EXEC): $(OBJ)
 
 clean:
 	rm -f $(OBJ) $(EXEC)
-	rm highscore.txt
+	rm -f highscore.txt
+
+rebuild: clean all
+
+play: 	
+	./tetris

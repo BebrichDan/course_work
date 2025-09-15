@@ -1,29 +1,21 @@
 #include "scoreManager.h"
 #include <fstream>
 
-ScoreManager::ScoreManager(const std::string& file) 
-    : score(0), highScore(0), filename(file) {
+ScoreManager::ScoreManager(const std::string& file)
+    : highScore(0), filename(file) {
     loadHighScore();
 }
 
-void ScoreManager::addScore(int linesCleared) {
-    int points = 0;
-    switch (linesCleared) {
-        case 1: points = 100; break;
-        case 2: points = 300; break;
-        case 3: points = 700; break;
-        case 4: points = 1500; break;
-    }
-    score += points;
-    if (score > highScore) {
-        highScore = score;
-    }
+int ScoreManager::getHighScore() const {
+    return highScore;
 }
 
-int ScoreManager::getScore() const { return score; }
-int ScoreManager::getHighScore() const { return highScore; }
-
-void ScoreManager::resetScore() { score = 0; }
+void ScoreManager::updateHighScore(int currentScore) {
+    if (currentScore > highScore) {
+        highScore = currentScore;
+        saveHighScore();
+    }
+}
 
 void ScoreManager::saveHighScore() {
     std::ofstream file(filename);
@@ -40,12 +32,5 @@ void ScoreManager::loadHighScore() {
         file.close();
     } else {
         highScore = 0;
-    }
-}
-
-void ScoreManager::updateHighScore() {
-    if (score > highScore) {
-        highScore = score;
-        saveHighScore();
     }
 }

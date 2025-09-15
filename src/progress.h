@@ -2,6 +2,11 @@
 #define PROGRESS_H
 
 class Progress {
+private:
+    int score;
+    int level;
+    bool gameOver;
+
 public:
     Progress();
 
@@ -13,10 +18,6 @@ public:
     void resetScore();
 
     void setLevel(int lvl);
-private:
-    int score;
-    int level;
-    bool gameOver;
 };
 
 #endif // PROGRESS_H

@@ -4,24 +4,18 @@
 #include <string>
 
 class ScoreManager {
+private:
+    int highScore;
+    std::string filename;
+
 public:
     ScoreManager(const std::string& file);
 
-    void addScore(int linesCleared);
-    int getScore() const;
     int getHighScore() const;
-
-    void resetScore();
+    void updateHighScore(int currentScore);
 
     void saveHighScore();
     void loadHighScore();
-
-    void updateHighScore();
-
-private:
-    int score;
-    int highScore;
-    std::string filename;
 };
 
 #endif
