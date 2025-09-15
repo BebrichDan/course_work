@@ -16,7 +16,7 @@ $(EXEC): $(OBJ)
 
 clean:
 	rm -f $(OBJ) $(EXEC)
-	rm -f highscore.txt
+	# rm -f highscore.txt
 
 rebuild: clean all
 
