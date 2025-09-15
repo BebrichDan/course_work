@@ -22,10 +22,6 @@ std::string getPlayerName(sf::RenderWindow& window, sf::Font& font) {
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-                return "Player";
-            }
             if (event.type == sf::Event::TextEntered) {
                 if (event.text.unicode == '\b') {
                     if (!name.empty()) name.pop_back();
@@ -50,7 +46,7 @@ void showStartScreen(sf::RenderWindow& window, sf::Font& font) {
     sf::Text title("TETRIS", font, 64);
     title.setFillColor(sf::Color::Cyan);
     title.setStyle(sf::Text::Bold);
-    title.setPosition(200, 200);
+    title.setPosition(230, 200);
 
     sf::Text prompt("Press S to start", font, 32);
     prompt.setFillColor(sf::Color::White);
@@ -59,10 +55,6 @@ void showStartScreen(sf::RenderWindow& window, sf::Font& font) {
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-                return;
-            }
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::S) {
                 return;
             }

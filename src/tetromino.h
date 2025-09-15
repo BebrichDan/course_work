@@ -11,10 +11,10 @@ class Tetromino {
 
  public:
   Tetromino(TetrominoType type);
-
+  
   const std::array<std::array<bool, 4>, 4>& getShape() const { return shape; }
   TetrominoType getType() const { return type; }
-
+  
   int getX() const { return x; }
   int getY() const { return y; }
 

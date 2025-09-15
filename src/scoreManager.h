@@ -14,7 +14,6 @@ class ScoreManager {
   ScoreManager(const std::string& file);
 
   void addScore(int linesCleared);
-  int getScore() const;
   int getHighScore() const;
   std::string getHighScorePlayer() const;
 

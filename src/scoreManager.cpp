@@ -10,11 +10,6 @@ ScoreManager::ScoreManager(const std::string& file)
 
 void ScoreManager::addScore(int linesCleared) {
     score += linesCleared * 100;
-    // имя при addScore мы не знаем → рекорд обновляется только в main при Game Over
-}
-
-int ScoreManager::getScore() const {
-    return score;
 }
 
 int ScoreManager::getHighScore() const {

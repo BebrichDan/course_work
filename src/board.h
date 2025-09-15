@@ -17,7 +17,6 @@ class Board {
   bool checkCollision(const Tetromino& piece, int dx, int dy) const;
   void placePiece(const Tetromino& piece);
   int clearLines();
-  void reset();
   void clearGrid();
 
   int getWidth() const { return width; }

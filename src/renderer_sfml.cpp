@@ -98,7 +98,7 @@ void RendererSFML::render(sf::RenderWindow& window,
     stats.setPosition(offsetX + board.getWidth() * tileSize + 20, offsetY);
     window.draw(stats);
 
-    // рекорд (только число во время игры, имя показываем только на Game Over)
+    // рекорд
     sf::Text highScoreText("High Score: " + std::to_string(scoreManager.getHighScore()), font, 20);
     highScoreText.setFillColor(sf::Color::Yellow);
     highScoreText.setPosition(offsetX + board.getWidth() * tileSize + 20, offsetY + 100);
